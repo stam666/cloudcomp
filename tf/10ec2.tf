@@ -15,8 +15,7 @@ resource "aws_instance" "app" {
   #!/bin/bash
   git clone https://github.com/stam666/cloudcomp.git
   cd cloudcomp/scripts/wp
-  # export DB_HOST=${aws_network_interface.db_app_eni.private_ip}
-  export DB_HOST=localhost
+  export DB_HOST=${aws_network_interface.db_app_eni.private_ip}
   export DB_NAME=${var.database_name}
   export DB_USER=${var.database_user}
   export DB_PASS=${var.database_pass}
