@@ -1,3 +1,4 @@
+import sys
 config_path = "/etc/mysql/mariadb.conf.d/50-server.cnf"
 
 def main():
