@@ -1,5 +1,4 @@
 resource "aws_security_group" "all" {
-  vpc_id = aws_vpc.main.id
   egress {
     from_port   = 0
     to_port     = 0
