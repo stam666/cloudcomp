@@ -84,10 +84,6 @@ resource "aws_instance" "app" {
 
 }
 
-resource "aws_" "name" {
-  
-}
-
 resource "aws_instance" "db" {
   ami           = var.ami
   instance_type = "t2.micro"
