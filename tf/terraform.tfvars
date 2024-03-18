@@ -1,7 +1,7 @@
 region            = "ap-southeast-1"
 availability_zone = "ap-southeast-1a"
 ami               = "ami-06c4be2792f419b7b"
-bucket_name       = "stam-midterm-bucket"
+bucket_name       = "stam-midterm-bucket2"
 database_name     = "wordpress"
 database_user     = "username"
 database_pass     = "password"

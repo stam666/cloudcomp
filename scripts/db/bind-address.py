@@ -1,9 +1,7 @@
-import sys
 config_path = "/etc/mysql/mariadb.conf.d/50-server.cnf"
 
 def main():
     contents = ""
-    db_host = sys.argv[1]
     with open(config_path, "r") as f:
         lines = f.readlines()
         for i in range(len(lines)):

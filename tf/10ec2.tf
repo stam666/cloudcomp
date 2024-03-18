@@ -90,7 +90,6 @@ resource "aws_instance" "db" {
               export DB_NAME=${var.database_name}
               export DB_USER=${var.database_user}
               export DB_PASS=${var.database_pass}
-              export DB_HOST=${aws_network_interface.db_app_eni.private_ip}
 
               sudo apt-get update
               sudo apt-get install -y mariadb-server
@@ -100,7 +99,7 @@ resource "aws_instance" "db" {
               sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
               sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
               sudo mysql -e "FLUSH PRIVILEGES;"
-              sudo python3 bind-address.py $DB_HOST
+              sudo python3 bind-address.py
               sudo systemctl restart mariadb
               EOF
   tags = {
