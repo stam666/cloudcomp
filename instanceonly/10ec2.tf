@@ -95,7 +95,7 @@ resource "aws_instance" "db" {
               export DB_NAME=${var.database_name}
               export DB_USER=${var.database_user}
               export DB_PASS=${var.database_pass}
-              export DB_HOST=${aws_network_interface.db_app_eni.private_ip}
+              export DB_HOST=${aws_instance.db.private_ip}
 
               sudo apt-get update
               sudo apt-get install -y mariadb-server
