@@ -15,7 +15,7 @@ resource "aws_instance" "app" {
   export DB_NAME=${var.database_name}
   export DB_USER=${var.database_user}
   export DB_PASS=${var.database_pass}
-  export WP_PUBLIC_IP=${aws_instance.app.public_ip}
+  # export WP_PUBLIC_IP=${aws_instance.app.public_ip}
   export WP_ADMIN_USER=${var.admin_user}
   export WP_ADMIN_PASS=${var.admin_pass}
   export BUCKET_NAME=${var.bucket_name}
@@ -56,7 +56,7 @@ resource "aws_instance" "app" {
   sudo curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
   sudo chmod +x wp-cli.phar
   sudo mv wp-cli.phar /usr/local/bin/wp
-  sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --title="CloudCompMidterm" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="example@example.com" --skip-email
+  # sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --title="CloudCompMidterm" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="example@example.com" --skip-email
   sudo wp plugin install amazon-s3-and-cloudfront --path=/var/www/html --allow-root --activate
   sudo systemctl restart apache2
 
@@ -99,7 +99,6 @@ resource "aws_instance" "db" {
               export DB_NAME=${var.database_name}
               export DB_USER=${var.database_user}
               export DB_PASS=${var.database_pass}
-              export DB_HOST=${aws_instance.db.private_ip}
 
               sudo apt-get update
               sudo apt-get install -y mariadb-server
