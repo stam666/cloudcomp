@@ -15,7 +15,6 @@ resource "aws_instance" "app" {
   export DB_NAME=${var.database_name}
   export DB_USER=${var.database_user}
   export DB_PASS=${var.database_pass}
-  # export WP_PUBLIC_IP=${aws_instance.app.public_ip}
   export WP_ADMIN_USER=${var.admin_user}
   export WP_ADMIN_PASS=${var.admin_pass}
   export BUCKET_NAME=${var.bucket_name}
