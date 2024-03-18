@@ -26,6 +26,13 @@ resource "aws_subnet" "app_db_subnet" {
   }
 }
 
+resource "aws_ec2_instance_connect_endpoint" "main" {
+  subnet_id = aws_subnet.app_db_subnet.id
+  tags = {
+    Name = "app-db-instance-connect-endpoint"
+  }
+}
+
 resource "aws_subnet" "nat_subnet" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.4.0/24"
