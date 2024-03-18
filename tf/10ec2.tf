@@ -64,23 +64,6 @@ resource "aws_instance" "app" {
   sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --title="CloudCompMidterm" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="example@example.com" --skip-email
   sudo wp plugin install amazon-s3-and-cloudfront --path=/var/www/html --allow-root --activate
   sudo systemctl restart apache2
-
-  #!/bin/bash
-  git clone https://github.com/stam666/cloudcomp.git
-  cd cloudcomp/scripts/db
-  export DB_NAME=${var.database_name}
-  export DB_USER=${var.database_user}
-  export DB_PASS=${var.database_pass} 
-  sudo apt-get update
-  sudo apt-get install -y mariadb-server
-  sudo systemctl start mariadb
-  sudo systemctl enable mariadb
-  sudo mysql -e "CREATE DATABASE ${var.database_name};"
-  sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
-  sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
-  sudo mysql -e "FLUSH PRIVILEGES;"
-  sudo python3 bind-address.py
-  sudo systemctl restart mariadb
   EOF
   tags = {
     Name = "app-instance"
