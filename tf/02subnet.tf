@@ -26,12 +26,17 @@ resource "aws_subnet" "app_db_subnet" {
   }
 }
 
-resource "aws_ec2_instance_connect_endpoint" "main" {
-  subnet_id = aws_subnet.app_db_subnet.id
-  tags = {
-    Name = "app-db-instance-connect-endpoint"
-  }
+resource "aws_vpc_endpoint" "ec2_endpoint" {
+  vpc_id            = aws_vpc.main.id
+  service_name      = "com.amazonaws.ap-southeast-1.ec2"
+  vpc_endpoint_type = "Interface"
+  subnet_ids        = [aws_subnet.app_db_subnet.id]
+
+  security_group_ids = [aws_security_group.app_sg.id]
+
+  private_dns_enabled = true
 }
+
 
 resource "aws_subnet" "nat_subnet" {
   vpc_id            = aws_vpc.main.id
