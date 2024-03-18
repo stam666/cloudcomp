@@ -99,25 +99,26 @@ resource "aws_instance" "db" {
     device_index         = 1
   }
 
-  # user_data = <<-EOF
-  #             #!/bin/bash
-  #             git clone https://github.com/stam666/cloudcomp.git
-  #             cd cloudcomp/scripts/db
-  #             export DB_NAME=${var.database_name}
-  #             export DB_USER=${var.database_user}
-  #             export DB_PASS=${var.database_pass}
+  user_data = <<-EOF
+              #!/bin/bash
+              git clone https://github.com/stam666/cloudcomp.git
+              cd cloudcomp/scripts/db
+              export DB_NAME=${var.database_name}
+              export DB_USER=${var.database_user}
+              export DB_PASS=${var.database_pass}
+              export DB_HOST=${aws_network_interface.db_app_eni.private_ip}
 
-  #             sudo apt-get update
-  #             sudo apt-get install -y mariadb-server
-  #             sudo systemctl start mariadb
-  #             sudo systemctl enable mariadb
-  #             sudo mysql -e "CREATE DATABASE ${var.database_name};"
-  #             sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
-  #             sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
-  #             sudo mysql -e "FLUSH PRIVILEGES;"
-  #             sudo python3 bind-address.py
-  #             sudo systemctl restart mariadb
-  #             EOF
+              sudo apt-get update
+              sudo apt-get install -y mariadb-server
+              sudo systemctl start mariadb
+              sudo systemctl enable mariadb
+              sudo mysql -e "CREATE DATABASE ${var.database_name};"
+              sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
+              sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
+              sudo mysql -e "FLUSH PRIVILEGES;"
+              sudo python3 bind-address.py $DB_HOST
+              sudo systemctl restart mariadb
+              EOF
   tags = {
     Name = "db-instance"
   }
