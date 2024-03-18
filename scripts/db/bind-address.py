@@ -8,7 +8,7 @@ def main():
         lines = f.readlines()
         for i in range(len(lines)):
             if "bind-address" in lines[i]:
-                lines[i] = "bind-address = " + db_host + "\n"
+                lines[i] = "bind-address = " + "0.0.0.0" + "\n"
                 break
         contents = "".join(lines)
 

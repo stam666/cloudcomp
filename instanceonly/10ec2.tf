@@ -84,6 +84,10 @@ resource "aws_instance" "app" {
 
 }
 
+resource "aws_" "name" {
+  
+}
+
 resource "aws_instance" "db" {
   ami           = var.ami
   instance_type = "t2.micro"
@@ -105,7 +109,7 @@ resource "aws_instance" "db" {
               sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
               sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
               sudo mysql -e "FLUSH PRIVILEGES;"
-              sudo python3 bind-address.py $DB_HOST
+              sudo python3 bind-address.py
               sudo systemctl restart mariadb
               EOF
   tags = {
