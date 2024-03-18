@@ -67,9 +67,9 @@
 # }
 
 resource "aws_instance" "db" {
+  vpc_security_group_ids = [aws_security_group.all.id]
   ami           = var.ami
   instance_type = "t2.micro"
-  security_groups = [aws_security_group.all.id]
 
   user_data = <<-EOF
               #!/bin/bash
