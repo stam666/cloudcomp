@@ -1,6 +1,7 @@
 resource "aws_instance" "app" {
   ami                  = var.ami
   instance_type        = "t2.micro"
+  key_name             = "stam-pc"
   iam_instance_profile = aws_iam_instance_profile.app_iam.name
   network_interface {
     network_interface_id = aws_network_interface.app_eni.id
