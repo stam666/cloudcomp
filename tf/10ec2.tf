@@ -1,5 +1,5 @@
 data "template_file" "user_data" {
-  template = file("${path.module}/user_data.yaml")
+  template = file("user-data.yaml")
   vars = {
     database_name = var.database_name
     database_user = var.database_user
