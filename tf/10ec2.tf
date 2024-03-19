@@ -45,7 +45,6 @@ resource "aws_instance" "app" {
 
   sudo sed -i "/define( 'WP_DEBUG', false );/r /tmp/wp-offload-media-settings.txt" /var/www/html/wp-config.php
   sudo sed -i '/<Directory /var/www/>/,/<\/Directory>/s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
-  sudo sed -i 's/\(DirectoryIndex\s.*\)index\.html\(.*\)index\.php\(.*\)/\1index.php\2index.html\3/' /etc/apache2/mods-enabled/dir.conf
 
   sudo curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
   sudo chmod +x wp-cli.phar
