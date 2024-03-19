@@ -61,3 +61,4 @@ write_files:
 
 runcmd:
   - bash /tmp/setup_wordpress.sh
+
