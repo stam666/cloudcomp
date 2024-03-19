@@ -14,11 +14,6 @@ resource "aws_instance" "app" {
 
   user_data = <<-EOF
   #!/bin/bash
-  sudo mkdir -p /home/ubuntu/.ssh
-  sudo echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODaHqtrCOBpfD+meWggDG5gFEqnNDtpxnqQ7x WIfXfL cloud-wordpress" >> /home/ubuntu/.ssh/authorized_keys
-  sudo chown -R ubuntu:ubuntu /home/ubuntu/.ssh
-  sudo chmod 600 /home/ubuntu/.ssh/authorized_keys
-
   sudo sed -i "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
   sudo apt-get update
   sudo apt-get install -y apache2 php8.1 libapache2-mod-php php8.1-mysql php8.1-curl php8.1-gd php8.1-mbstring php8.1-xml php8.1-xmlrpc php8.1-soap php8.1-intl php8.1-zip libapache2-mod-php
@@ -56,6 +51,7 @@ resource "aws_instance" "app" {
   sudo mv wp-cli.phar /usr/local/bin/wp
   sudo wp core install --path=/var/www/html --allow-root --url=${aws_eip.app_eip.public_ip} --title=Cloud --admin_user=${var.admin_user} --admin_password=${var.admin_pass} --admin_email=example@example.com --skip-email
   sleep 3
+  curl localhost > /dev/null
   sudo wp core install --path=/var/www/html --allow-root --url=${aws_eip.app_eip.public_ip} --title=Cloud --admin_user=${var.admin_user} --admin_password=${var.admin_pass} --admin_email=example@example.com --skip-email
   sudo wp plugin install amazon-s3-and-cloudfront --path=/var/www/html --allow-root --activate
   sudo systemctl restart apache2
@@ -84,11 +80,6 @@ resource "aws_instance" "db" {
 
   user_data = <<-EOF
   #!/bin/bash
-  sudo mkdir -p /home/ubuntu/.ssh
-  sudo echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODaHqtrCOBpfD+meWggDG5gFEqnNDtpxnqQ7x WIfXfL cloud-wordpress" >> /home/ubuntu/.ssh/authorized_keys
-  sudo chown -R ubuntu:ubuntu /home/ubuntu/.ssh
-
-  sudo chmod 600 /home/ubuntu/.ssh/authorized_keys
   export DB_NAME=${var.database_name}
   export DB_USER=${var.database_user}
   export DB_PASS=${var.database_pass} 
