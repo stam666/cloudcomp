@@ -63,5 +63,6 @@ write_files:
 
 runcmd:
   - bash /tmp/setup_wordpress.sh
+  - sleep 10
   - wp plugin install amazon-s3-and-cloudfront --path=/var/www/html --allow-root --activate 
   - systemctl restart apache2
