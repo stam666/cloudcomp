@@ -52,6 +52,7 @@ resource "aws_instance" "app" {
   sudo chmod +x wp-cli.phar
   sudo mv wp-cli.phar /usr/local/bin/wp
   sudo wp core install --path=/var/www/html --allow-root --url=${aws_eip.app_eip.public_ip} --title=CloudCompMidterm --admin_user=${var.admin_user} --admin_password=${var.admin_pass} --admin_email=example@example.com --skip-email
+  sleep 3
   sudo wp plugin install amazon-s3-and-cloudfront --path=/var/www/html --allow-root --activate
   sudo systemctl restart apache2
   EOF
