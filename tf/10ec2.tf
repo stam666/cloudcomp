@@ -36,8 +36,8 @@ resource "aws_instance" "app" {
   define('AS3CF_SETTINGS', serialize(array(
       'provider' => 'aws',
       'use-server-roles' => true,
-      'bucket' => ${var.bucket_name},
-      'region' => ${var.region},
+      'bucket' => '${var.bucket_name}',
+      'region' => '${var.region}',
       'copy-to-s3' => true,
       'serve-from-s3' => true,
   )));
