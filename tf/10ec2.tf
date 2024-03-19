@@ -54,7 +54,7 @@ resource "aws_instance" "app" {
   sudo wp plugin install amazon-s3-and-cloudfront --path=/var/www/html --allow-root --activate
   sudo systemctl restart apache2
   EOF
-  user_data = data.template_file.user_data.rendered
+
   user_data_replace_on_change = true
 
   depends_on = [aws_network_interface.app_eni, aws_network_interface.db_app_eni, aws_eip.app_eip, aws_instance.db]
