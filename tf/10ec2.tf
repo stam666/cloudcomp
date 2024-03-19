@@ -84,24 +84,23 @@ resource "aws_instance" "db" {
   }
 
   user_data = <<-EOF
-              #!/bin/bash
-              git clone https://github.com/stam666/cloudcomp.git
-              cd cloudcomp/scripts/db
-              export DB_NAME=${var.database_name}
-              export DB_USER=${var.database_user}
-              export DB_PASS=${var.database_pass}
-
-              sudo apt-get update
-              sudo apt-get install -y mariadb-server
-              sudo systemctl start mariadb
-              sudo systemctl enable mariadb
-              sudo mysql -e "CREATE DATABASE ${var.database_name};"
-              sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
-              sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
-              sudo mysql -e "FLUSH PRIVILEGES;"
-              sudo python3 bind-address.py
-              sudo systemctl restart mariadb
-              EOF
+  #!/bin/bash
+  git clone https://github.com/stam666/cloudcomp.git
+  cd cloudcomp/scripts/db
+  export DB_NAME=${var.database_name}
+  export DB_USER=${var.database_user}
+  export DB_PASS=${var.database_pass} 
+  sudo apt-get update
+  sudo apt-get install -y mariadb-server
+  sudo systemctl start mariadb
+  sudo systemctl enable mariadb
+  sudo mysql -e "CREATE DATABASE ${var.database_name};"
+  sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
+  sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
+  sudo mysql -e "FLUSH PRIVILEGES;"
+  sudo python3 bind-address.py
+  sudo systemctl restart mariadb
+  EOF
   tags = {
     Name = "db-instance"
   }
