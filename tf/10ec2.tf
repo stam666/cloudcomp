@@ -14,8 +14,6 @@ resource "aws_instance" "app" {
 
   user_data = <<-EOF
   #!/bin/bash
-  git clone https://github.com/stam666/cloudcomp.git
-  cd cloudcomp/scripts/wp
   export DB_HOST=${aws_network_interface.db_app_eni.private_ip}
   export DB_NAME=${var.database_name}
   export DB_USER=${var.database_user}
@@ -59,7 +57,6 @@ resource "aws_instance" "app" {
   sudo sed -i '/<Directory /var/www/>/,/<\/Directory>/s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
   sudo sed -i 's/\(DirectoryIndex\s.*\)index\.html\(.*\)index\.php\(.*\)/\1index.php\2index.html\3/' /etc/apache2/mods-enabled/dir.conf
 
-  cd /home/ubuntu
   sudo curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
   sudo chmod +x wp-cli.phar
   sudo mv wp-cli.phar /usr/local/bin/wp
@@ -87,8 +84,6 @@ resource "aws_instance" "db" {
 
   user_data = <<-EOF
   #!/bin/bash
-  git clone https://github.com/stam666/cloudcomp.git
-  cd cloudcomp/scripts/db
   export DB_NAME=${var.database_name}
   export DB_USER=${var.database_user}
   export DB_PASS=${var.database_pass} 
@@ -100,7 +95,7 @@ resource "aws_instance" "db" {
   sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
   sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
   sudo mysql -e "FLUSH PRIVILEGES;"
-  sudo python3 bind-address.py
+  sudo sed -i 's/bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
   sudo systemctl restart mariadb
   EOF
   tags = {
