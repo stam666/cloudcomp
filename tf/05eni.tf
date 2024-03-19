@@ -13,6 +13,7 @@ resource "aws_eip_association" "app_eip_asso" {
 
 resource "aws_network_interface" "app_db_eni" {
   subnet_id = aws_subnet.app_db_subnet.id
+  security_groups = [aws_security_group.default.id]
   tags = {
     Name = "app-db-eni"
   }
@@ -20,6 +21,7 @@ resource "aws_network_interface" "app_db_eni" {
 
 resource "aws_network_interface" "db_eni" {
   subnet_id = aws_subnet.db_subnet.id
+  security_groups = [aws_security_group.default.id]
   tags = {
     Name = "db-eni"
   }
