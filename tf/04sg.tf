@@ -47,19 +47,19 @@ resource "aws_security_group" "db_sg" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    security_groups = [aws_security_group.app_sg.id]
+    cidr_blocks = [aws_subnet.app_db_subnet.cidr_block]
   }
   ingress {
     from_port       = -1
     to_port         = -1
     protocol        = "icmp"
-    security_groups = [aws_security_group.app_sg.id]
+    cidr_blocks = [aws_subnet.app_db_subnet.cidr_block]
   }
   ingress {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [aws_security_group.app_sg.id]
+    cidr_blocks = [aws_subnet.app_db_subnet.cidr_block]
   }
   tags = {
     Name = "db-sg"
