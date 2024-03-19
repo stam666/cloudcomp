@@ -54,15 +54,10 @@ write_files:
       chmod +x wp-cli.phar
       mv wp-cli.phar /usr/local/bin/wp
       wp core install --path=/var/www/html --allow-root --url=${wp_public_ip} --title=CloudCompMidterm --admin_user=${admin_user} --admin_password=${admin_pass} --admin_email=example@example.com --skip-email
+      sleep 10
+      wp plugin install amazon-s3-and-cloudfront --path=/var/www/html --allow-root --activate
+      systemctl restart apache2
     permissions: "0755"
-
-  - path: /tmp/setup_wordpress_plugin.sh
-    content: |
-      # Content of setup_wordpress_part2.sh goes here
-    permissions: '0755'
 
 runcmd:
   - bash /tmp/setup_wordpress.sh
-  - sleep 10
-  - wp plugin install amazon-s3-and-cloudfront --path=/var/www/html --allow-root --activate 
-  - systemctl restart apache2
