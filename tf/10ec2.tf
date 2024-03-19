@@ -56,7 +56,7 @@ resource "aws_instance" "app" {
   sudo systemctl restart apache2
   EOF
 
-  depends_on = [aws_network_interface.app_eni, aws_network_interface.db_app_eni, aws_instance.db]
+  depends_on = [aws_network_interface.app_eni, aws_network_interface.db_app_eni, aws_eip.app_eip, aws_instance.db]
   tags = {
     Name = "app-instance"
   }
